@@ -32,11 +32,8 @@ youtube = build('youtube', 'v3', developerKey=api_key)
 # Define the list of regions to retrieve trending videos for
 regions = ['AR', 'AU', 'AT', 'BE', 'BR', 'CA', 'CL', 'CO', 'CZ', 'DK', 'EG', 'FI', 'FR', 'DE', 'HK', 'HU', 'IN', 'ID', 'IE', 'IL', 'IT', 'JP', 'KE', 'MY', 'MX', 'MA', 'NL', 'NZ', 'NG', 'NO', 'PH', 'PL', 'PT', 'RO', 'RU', 'SA', 'SG', 'ZA', 'KR', 'ES', 'SE', 'CH', 'TW', 'TH', 'TR', 'UA', 'AE', 'GB', 'US', 'VN']
 
-columns = ['trending_date', 'title', 'channelTitle', 'view_count', 'likes','description']
-df = pd.DataFrame(columns=columns)
-
-# To retrieve the trending videos for a given region
 def get_trending_videos(region_code):
+    # Define the resource we want to get (trending videos in this case)
     resource = youtube.videos().list(
         part='snippet,statistics',
         chart='mostPopular',
@@ -44,7 +41,9 @@ def get_trending_videos(region_code):
         maxResults=50
     )
 
+    videos = []
     try:
+        # Execute the request and extract the required information from the API response
         response = resource.execute()
         for video in response['items']:
             try:
@@ -54,19 +53,18 @@ def get_trending_videos(region_code):
                 channelTitle = video['snippet']['channelTitle']
                 view_count = video['statistics'].get('viewCount', 0)
                 likes = video['statistics'].get('likeCount', 0)
-                description = video['snippet'].get('description', '')
-
+                dislikes = video['statistics'].get('dislikeCount', 0)
+                
                 if langid.classify(title)[0] == 'en':
-
-                  # Add the video details to the DataFrame
-                  df = pd.concat([df, pd.DataFrame({
-                      'trending_date': [trending_date],
-                      'text': [title],
-                      'channelTitle': [channelTitle],
-                      'view_count': [view_count],
-                      'likes': [likes],
-                      'description': [description]
-                  })], ignore_index=True)
+                    # Add the video details to the list of videos
+                    videos.append({
+                        'Trending Date': trending_date,
+                        'text': title,
+                        'Channel Title': channelTitle,
+                        'Views': view_count,
+                        'Likes': likes,
+                        'Dislikes': dislikes
+                    })
 
             except KeyError as e:
                 print(f"Skipping video with missing field: {str(e)}")
@@ -74,8 +72,9 @@ def get_trending_videos(region_code):
 
     except HttpError as e:
         print(f"An HTTP error {e.resp.status} occurred: {e.content}")
+        return None
 
-    return df
+    return videos
 
 # Define Streamlit app
 st.title('Trending Youtube Videos Emotion Predictor - Powered by MindsDB')
