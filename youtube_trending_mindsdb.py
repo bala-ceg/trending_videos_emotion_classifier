@@ -29,58 +29,8 @@ def predict_from_mindsdb(df: pd.DataFrame):
 api_key = os.environ['youtube_api_key']
 youtube = build('youtube', 'v3', developerKey=api_key)
 
-regions = {
-    'AR': 'Argentina',
-    'AU': 'Australia',
-    'AT': 'Austria',
-    'BE': 'Belgium',
-    'BR': 'Brazil',
-    'CA': 'Canada',
-    'CL': 'Chile',
-    'CO': 'Colombia',
-    'CZ': 'Czech Republic',
-    'DK': 'Denmark',
-    'EG': 'Egypt',
-    'FI': 'Finland',
-    'FR': 'France',
-    'DE': 'Germany',
-    'HK': 'Hong Kong',
-    'HU': 'Hungary',
-    'IN': 'India',
-    'ID': 'Indonesia',
-    'IE': 'Ireland',
-    'IL': 'Israel',
-    'IT': 'Italy',
-    'JP': 'Japan',
-    'KE': 'Kenya',
-    'MY': 'Malaysia',
-    'MX': 'Mexico',
-    'MA': 'Morocco',
-    'NL': 'Netherlands',
-    'NZ': 'New Zealand',
-    'NG': 'Nigeria',
-    'NO': 'Norway',
-    'PH': 'Philippines',
-    'PL': 'Poland',
-    'PT': 'Portugal',
-    'RO': 'Romania',
-    'RU': 'Russia',
-    'SA': 'Saudi Arabia',
-    'SG': 'Singapore',
-    'ZA': 'South Africa',
-    'KR': 'South Korea',
-    'ES': 'Spain',
-    'SE': 'Sweden',
-    'CH': 'Switzerland',
-    'TW': 'Taiwan',
-    'TH': 'Thailand',
-    'TR': 'Turkey',
-    'UA': 'Ukraine',
-    'AE': 'United Arab Emirates',
-    'GB': 'United Kingdom',
-    'US': 'United States',
-    'VN': 'Vietnam'
-}
+# Define the list of regions to retrieve trending videos for
+regions = ['AR', 'AU', 'AT', 'BE', 'BR', 'CA', 'CL', 'CO', 'CZ', 'DK', 'EG', 'FI', 'FR', 'DE', 'HK', 'HU', 'IN', 'ID', 'IE', 'IL', 'IT', 'JP', 'KE', 'MY', 'MX', 'MA', 'NL', 'NZ', 'NG', 'NO', 'PH', 'PL', 'PT', 'RO', 'RU', 'SA', 'SG', 'ZA', 'KR', 'ES', 'SE', 'CH', 'TW', 'TH', 'TR', 'UA', 'AE', 'GB', 'US', 'VN']
 
 def get_trending_videos(region_code):
     # Define the resource we want to get (trending videos in this case)
@@ -129,13 +79,11 @@ def get_trending_videos(region_code):
 # Define Streamlit app
 st.title('Trending Youtube Videos Emotion Predictor - Powered by MindsDB')
 st.write('Pick a region to predict the sentiment of trending videos')
+# Define the region selection dropdown
+selected_region = st.selectbox('Select a region:', regions)
 
-region = st.selectbox('Select a region', list(regions.keys()))
-
-# Get the country name for the selected region
-country = regions[region]
 # Retrieve the trending videos for the selected region
-videos = get_trending_videos(country)
+videos = get_trending_videos(selected_region)
 
 # Display the videos as a table
 if videos is not None:
@@ -150,5 +98,3 @@ if videos is not None:
             st.error(f'Error fetching predictions: {e}åå')
 else:
     st.write('No trending videos available in english for the selected region.')
-
-
