@@ -133,10 +133,9 @@ st.write('Pick a region to predict the sentiment of trending videos')
 region = st.selectbox('Select a region', list(regions.keys()))
 
 # Get the country name for the selected region
-selected_country = regions[region]
-
+country = regions[region]
 # Retrieve the trending videos for the selected region
-videos = get_trending_videos(selected_country)
+videos = get_trending_videos(country)
 
 # Display the videos as a table
 if videos is not None:
