@@ -71,7 +71,6 @@ def get_trending_videos(region_code):
 
     except HttpError as e:
         print(f"An HTTP error {e.resp.status} occurred: {e.content}")
-        continue
 
     return df
 
