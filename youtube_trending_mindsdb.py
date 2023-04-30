@@ -30,7 +30,60 @@ api_key = os.environ['youtube_api_key']
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 # Define the list of regions to retrieve trending videos for
-regions = ['AR', 'AU', 'AT', 'BE', 'BR', 'CA', 'CL', 'CO', 'CZ', 'DK', 'EG', 'FI', 'FR', 'DE', 'HK', 'HU', 'IN', 'ID', 'IE', 'IL', 'IT', 'JP', 'KE', 'MY', 'MX', 'MA', 'NL', 'NZ', 'NG', 'NO', 'PH', 'PL', 'PT', 'RO', 'RU', 'SA', 'SG', 'ZA', 'KR', 'ES', 'SE', 'CH', 'TW', 'TH', 'TR', 'UA', 'AE', 'GB', 'US', 'VN']
+regions = {
+    'AR': 'Argentina',
+    'AU': 'Australia',
+    'AT': 'Austria',
+    'BE': 'Belgium',
+    'BR': 'Brazil',
+    'CA': 'Canada',
+    'CL': 'Chile',
+    'CO': 'Colombia',
+    'CZ': 'Czech Republic',
+    'DK': 'Denmark',
+    'EG': 'Egypt',
+    'FI': 'Finland',
+    'FR': 'France',
+    'DE': 'Germany',
+    'HK': 'Hong Kong',
+    'HU': 'Hungary',
+    'IN': 'India',
+    'ID': 'Indonesia',
+    'IE': 'Ireland',
+    'IL': 'Israel',
+    'IT': 'Italy',
+    'JP': 'Japan',
+    'KE': 'Kenya',
+    'MY': 'Malaysia',
+    'MX': 'Mexico',
+    'MA': 'Morocco',
+    'NL': 'Netherlands',
+    'NZ': 'New Zealand',
+    'NG': 'Nigeria',
+    'NO': 'Norway',
+    'PH': 'Philippines',
+    'PL': 'Poland',
+    'PT': 'Portugal',
+    'RO': 'Romania',
+    'RU': 'Russia',
+    'SA': 'Saudi Arabia',
+    'SG': 'Singapore',
+    'ZA': 'South Africa',
+    'KR': 'South Korea',
+    'ES': 'Spain',
+    'SE': 'Sweden',
+    'CH': 'Switzerland',
+    'TW': 'Taiwan',
+    'TH': 'Thailand',
+    'TR': 'Turkey',
+    'UA': 'Ukraine',
+    'AE': 'United Arab Emirates',
+    'GB': 'United Kingdom',
+    'US': 'United States',
+    'VN': 'Vietnam'
+}
+
+
 
 def get_trending_videos(region_code):
     # Define the resource we want to get (trending videos in this case)
