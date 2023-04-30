@@ -1,0 +1,5 @@
+streamlit
+mindsdb-sdk
+tweepy
+google-api-python-client
+langid
