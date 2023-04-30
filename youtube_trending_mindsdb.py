@@ -32,6 +32,9 @@ youtube = build('youtube', 'v3', developerKey=api_key)
 # Define the list of regions to retrieve trending videos for
 regions = ['AR', 'AU', 'AT', 'BE', 'BR', 'CA', 'CL', 'CO', 'CZ', 'DK', 'EG', 'FI', 'FR', 'DE', 'HK', 'HU', 'IN', 'ID', 'IE', 'IL', 'IT', 'JP', 'KE', 'MY', 'MX', 'MA', 'NL', 'NZ', 'NG', 'NO', 'PH', 'PL', 'PT', 'RO', 'RU', 'SA', 'SG', 'ZA', 'KR', 'ES', 'SE', 'CH', 'TW', 'TH', 'TR', 'UA', 'AE', 'GB', 'US', 'VN']
 
+columns = ['trending_date', 'title', 'channelTitle', 'view_count', 'likes','description']
+df = pd.DataFrame(columns=columns)
+
 # To retrieve the trending videos for a given region
 def get_trending_videos(region_code):
     resource = youtube.videos().list(
