@@ -130,15 +130,13 @@ def get_trending_videos(region_code):
 st.title('Trending Youtube Videos Emotion Predictor - Powered by MindsDB')
 st.write('Pick a region to predict the sentiment of trending videos')
 
-# Define the region selection dropdown
-regions = st.selectbox('Select a region', list(regions.keys()))
+region = st.selectbox('Select a region', list(regions.keys()))
 
 # Get the country name for the selected region
-selected_region = regions[region]
-
+selected_country = regions[region]
 
 # Retrieve the trending videos for the selected region
-videos = get_trending_videos(selected_region)
+videos = get_trending_videos(selected_country)
 
 # Display the videos as a table
 if videos is not None:
